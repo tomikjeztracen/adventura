@@ -1,10 +1,6 @@
 package cz.vse.adventura.logika;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +20,7 @@ public class Prostor {
     private String nazev;
     private String popis;
     private Set<Prostor> vychody;   // obsahuje sousední místnosti
+    private Map<String, Vec> veci = new HashMap<>();
 
     /**
      * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
@@ -49,9 +46,22 @@ public class Prostor {
      * @param vedlejsi prostor, který sousedi s aktualnim prostorem.
      *
      */
-    public void setVychod(Prostor vedlejsi) {
+    public void addVychod(Prostor vedlejsi) {
         vychody.add(vedlejsi);
     }
+
+    public void addVec(Vec vec) {
+        veci.put(vec.getNazev(), vec);
+    }
+    public void removeVec(String nazev){
+        veci.remove(nazev);
+    }
+    public boolean hasVec(String nazev){
+        return veci.containsKey(nazev);
+
+    }
+
+
 
     /**
      * Metoda equals pro porovnání dvou prostorů. Překrývá se metoda equals ze
@@ -118,7 +128,7 @@ public class Prostor {
      */
     public String dlouhyPopis() {
         return "Jsi v mistnosti/prostoru " + popis + ".\n"
-                + popisVychodu();
+                + popisVychodu() + "\n" + popisVeci() ;
     }
 
     /**
@@ -131,6 +141,13 @@ public class Prostor {
         String vracenyText = "východy:";
         for (Prostor sousedni : vychody) {
             vracenyText += " " + sousedni.getNazev();
+        }
+        return vracenyText;
+    }
+    private String popisVeci() {
+        String vracenyText = "veci:";
+        for (String nazevVeci : veci.keySet()) {
+            vracenyText += " " + nazevVeci;
         }
         return vracenyText;
     }

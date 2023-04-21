@@ -28,5 +28,7 @@ public class Start
         IHra hra = new Hra();
         TextoveRozhrani ui = new TextoveRozhrani(hra);
         ui.hraj();
+
+
     }
 }
