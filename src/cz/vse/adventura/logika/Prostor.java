@@ -20,7 +20,7 @@ public class Prostor {
     private String nazev;
     private String popis;
     private Set<Prostor> vychody;   // obsahuje sousední místnosti
-    private Map<String, Vec> veci = new HashMap<>();
+    private Map<String, Vec> veci_v_prostoru = new HashMap<>();
 
     /**
      * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
@@ -51,14 +51,16 @@ public class Prostor {
     }
 
     public void addVec(Vec vec) {
-        veci.put(vec.getNazev(), vec);
+        veci_v_prostoru.put(vec.getNazev(), vec);
     }
     public void removeVec(String nazev){
-        veci.remove(nazev);
+        veci_v_prostoru.remove(nazev);
     }
     public boolean hasVec(String nazev){
-        return veci.containsKey(nazev);
-
+        return veci_v_prostoru.containsKey(nazev);
+    }
+    public Vec getVec(String nazev) {
+        return veci_v_prostoru.get(nazev);
     }
 
 
@@ -146,7 +148,7 @@ public class Prostor {
     }
     private String popisVeci() {
         String vracenyText = "veci:";
-        for (String nazevVeci : veci.keySet()) {
+        for (String nazevVeci : veci_v_prostoru.keySet()) {
             vracenyText += " " + nazevVeci;
         }
         return vracenyText;
@@ -186,4 +188,21 @@ public class Prostor {
     public Collection<Prostor> getVychody() {
         return Collections.unmodifiableCollection(vychody);
     }
+
+    public String getVypisData() {
+        String helpVeci = "";
+        for (String vec : this.veci_v_prostoru.keySet()){
+            helpVeci += (" " +vec);
+        }
+
+        String helpVychody = "";
+        for (Prostor prostor: this.vychody){
+            helpVychody += (" " + prostor.getNazev());
+        }
+
+
+        return "veci: " + helpVeci + " vychody: " + helpVychody;
+    }
 }
+
+

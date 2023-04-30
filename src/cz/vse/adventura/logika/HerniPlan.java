@@ -30,31 +30,48 @@ public class HerniPlan {
      */
     private void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
-        Prostor domecek = new Prostor("domeček","domeček, ve kterém bydlí Karkulka");
-        Prostor chaloupka = new Prostor("chaloupka", "chaloupka, ve které bydlí babička Karkulky");
-        Prostor jeskyne = new Prostor("jeskyně","stará plesnivá jeskyně");
-        Prostor les = new Prostor("les","les s jahodami, malinami a pramenem vody");
-        Prostor hlubokyLes = new Prostor("hluboký_les","temný les, ve kterém lze potkat vlka");
+        Prostor Overworld = new Prostor("Overworld","overworld");
+        Prostor Jeskyne = new Prostor("Jeskyně", "Jeskyně");
+        Prostor Nether = new Prostor("Nether","Nether");
+        Prostor TheEnd = new Prostor("TheEnd","TheEnd");
 
-        //přidat věci
-        Vec koste = new Vec("kostě", true);
-        Vec postel = new Vec("postel", false);
 
-        domecek.addVec(koste);
-        domecek.addVec(postel);
+        //přidat věci do Overworldu
+        Vec jablko = new Vec("jablko", true, 1);
+        Vec craftingTable = new Vec("craftak", false, 1);
+        Overworld.addVec(jablko);
+        Overworld.addVec(craftingTable);
 
-        
+        //přidat věci do Netheru
+        Vec zlate_jablko = new Vec("zlaté jablko", true, 1);
+        Nether.addVec(zlate_jablko);
+
+        //pridat věci do Jeskyně
+        //TODO implementovat generátor pro železo a diamanty
+        Vec zelezo = new Vec("zelezo", true, 10);
+        Vec diamanty = new Vec("diamanty", true,10 );
+        Vec dulni_vozik = new Vec("dulni vozik", true, 1);
+        Jeskyne.addVec(zelezo);
+        Jeskyne.addVec(diamanty);
+        Jeskyne.addVec(dulni_vozik);
+
+        //pridat věci do Endu
+        Vec sloup = new Vec("sloup", false, 1);
+        TheEnd.addVec(sloup);
+
+
         // přiřazují se průchody mezi prostory (sousedící prostory)
-        domecek.addVychod(les);
-        les.addVychod(domecek);
-        les.addVychod(hlubokyLes);
-        hlubokyLes.addVychod(les);
-        hlubokyLes.addVychod(jeskyne);
-        hlubokyLes.addVychod(chaloupka);
-        jeskyne.addVychod(hlubokyLes);
-        chaloupka.addVychod(hlubokyLes);
+        Overworld.addVychod(Jeskyne);
+        Overworld.addVychod(Nether);
+
+        Jeskyne.addVychod(TheEnd);
+        Jeskyne.addVychod(Overworld);
+
+        Nether.addVychod(Overworld);
+
+        TheEnd.addVychod(Jeskyne);
                 
-        aktualniProstor = domecek;  // hra začíná v domečku       
+        aktualniProstor = Overworld;  // hra začíná v Overworldu
     }
     
     /**
